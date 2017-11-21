@@ -122,10 +122,6 @@ module.exports = {
         ],
         include: paths.appSrc,
       },
-      // {
-      //   test: /tinymce\/skins\/lightgray\/content\.min\.css$/,
-      //   loader: 'style-loader!css-loader!postcss-loader',
-      // },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall

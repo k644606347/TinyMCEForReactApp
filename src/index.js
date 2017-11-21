@@ -1,5 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import ComosEditor from './ComosEditor';
@@ -9,6 +7,7 @@ textarea1.value = 'aaa';
 
 document.querySelector('#root').appendChild(textarea1);
 
+let editor = null;
 ComosEditor.init({
     selector: 'textarea',
     height: 500,
@@ -31,12 +30,10 @@ ComosEditor.init({
     //     plugins: ['autosave', 'lists', 'autolink'],
     //     toolbar: ['undo', 'bold', 'italic', 'styleselect']
     // }
+}).then((res) => {
+    editor = res;
+}).catch((e) => {
+    console.error(e);
 });
-// .then(() => {
-//     // debugger;
-// }).catch(() => {
-//     // debugger;
-//     console.log('catch', arguments);
-// });
 
 registerServiceWorker();

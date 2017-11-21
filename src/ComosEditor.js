@@ -1,4 +1,4 @@
-import tinymce from 'tinymce/tinymce.min';
+import tinymce from 'tinymce';
 import theme from 'tinymce/themes/modern/theme';
 import Plugins from './Plugins';
 import contentCSS from 'tinymce/skins/lightgray/content.min.css';
@@ -15,11 +15,11 @@ class ComosEditor {
         }, settings);
     
 
-        return tinymce.init(cloneSettings).then((res) => {
-
-        }).catch(() => {
-
-        })
+        return tinymce.init(cloneSettings).then((editors) => {
+            return editors[0];
+        }).catch((e) => {
+            return Promise.reject(e);
+        });
     };
     static remove(editorID) {
         for (let editor of ComosEditor.editors) {
