@@ -56,7 +56,13 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: () => {
+    let entry = {      
+      comosEditor: ['./src/ComosEditor'],
+      demo: [paths.appIndexJs],
+    };
+    return entry
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -105,6 +111,9 @@ module.exports = {
     ],
   },
   module: {
+    noParse: function (content) {
+        return /tinymce\/.+\.min.js/.test(content);
+    },
     strictExportPresence: true,
     rules: [
       // TODO: Disable require.ensure as it's not a standard language feature.
@@ -362,6 +371,9 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['comosEditor']
+  }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
